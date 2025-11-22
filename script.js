@@ -12,7 +12,7 @@
 		const currentTime = getCurrentTime();
 
 		mdui.snackbar({
-		  message: `<h3>欢迎来到白糖突然想到的主页<br>现在时间:${currentTime}</h3>`,
+		  message: `<span style="font-size: 18px; line-height: 1.5;">欢迎来到白糖突然想到的主页<br>现在时间:${currentTime}</span>`,
 		  placement: 'top',
 		  closeable: true
 		});
