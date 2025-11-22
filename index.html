@@ -1,0 +1,277 @@
+<!doctype html>
+<html class="mdui-theme-auto" lang="zh-CN">
+<head>
+  <meta name="google-adsense-account" content="ca-pub-6393990555447663">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+  <meta name="renderer" content="webkit"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <title>白糖突然想到的主站</title>
+  <meta name="description" content="白糖突然想到的主站">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#6750A4">
+  <link rel="canonical" href="index.html">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="白糖突然想到的主站">
+  <meta property="og:description" content="">
+  <meta property="og:url" content="index.html">
+  <meta property="og:site_name" content="白糖突然想到的主站">
+  <meta property="og:image" content="https://maker.ct.ws/blog/usr/uploads/2025/10/47267895.jpg">
+  <meta name="keywords" content="typecho,php,blog,主站,这个人不姓苏,白糖突然想到,Dawn">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="x5-page-mode" content="app">
+  <meta name="MobileOptimized" content="320">
+  <meta name="author" content="白糖突然想到">
+  <link rel="shortcut icon" href="https://maker.ct.ws/blog/usr/themes/Matecho/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="https://maker.ct.ws/blog/usr/uploads/2025/10/47267895.jpg" type="image/x-icon">
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <script src="script.js"></script>
+</head>
+<body class="mdui-theme-auto">
+  <mdui-layout class="app-shell">
+    <mdui-top-app-bar class="app-bar" variant="small">
+      <mdui-button-icon icon="map--outlined"></mdui-button-icon>
+      <mdui-top-app-bar-title>白糖突然想到的主站</mdui-top-app-bar-title>
+      <mdui-button-icon id="theme-toggle" icon="light_mode"></mdui-button-icon>
+      <mdui-button-icon onclick="javascript:location.reload();" icon="refresh--outlined"></mdui-button-icon>
+    </mdui-top-app-bar>
+    
+    <main class="page-content object">
+      <section class="page-section">
+        <h1 class="page-title" style="display: flex; align-items: center; gap: 8px; font-size: 24px;">
+          <mdui-icon name="person" style="font-size: 36px;"></mdui-icon>
+          个人
+        </h1>
+        <div class="cards-grid">
+          <mdui-card class="person-card card-base">
+            <div style="text-align: center;">
+              <mdui-avatar src="https://maker.ct.ws/blog/usr/uploads/2025/10/47267895.jpg" style="width: 100px;height: 100px" fit="cover"></mdui-avatar>
+            </div>
+            <p style="text-align: center;font-size: 30px;margin: 0;">白糖突然想到</p>
+            <div class="button-stack">
+              <mdui-card variant="outlined" class="sentence-card card-base">
+                <h2 class="page-title" style="display: flex; align-items: center; gap: 8px; font-size: 18px;">
+                  <mdui-icon name="comment" style="font-size: 24px;"></mdui-icon>
+                  一言
+                </h2>
+                <mdui-card variant="elevated" style="padding: 16px;">
+                  <div class="saying-text">
+                    <p id="hitokoto_text" style="margin: 0; flex: 1;">正在获取一句话...</p>
+                    <mdui-button-icon variant="filled" icon="refresh" id="refreshtext"></mdui-button-icon>
+                  </div>
+                </mdui-card>
+              </mdui-card>
+              
+              <mdui-button class="nav-action open-nav" variant="filled" href="https://space.bilibili.com/572522058" data-subtitle="即将打开B站主页">B站
+                <mdui-icon slot="icon" name="play_arrow"></mdui-icon>
+                <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+              </mdui-button>
+              
+              <mdui-button class="nav-action open-nav" variant="tonal" href="https://maker.ct.ws/blog" data-subtitle="即将打开博客主页">博客
+                <mdui-icon slot="icon" name="book"></mdui-icon>
+                <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+              </mdui-button>
+            </div>
+          </mdui-card>
+        </div>
+      </section>
+      
+      <section class="page-section">
+        <h1 class="page-title" style="display: flex; align-items: center; gap: 8px; font-size: 24px;">
+          <mdui-icon name="map" style="font-size: 36px;"></mdui-icon>
+          导航列表
+        </h1>
+        <div class="cards-grid">
+          <mdui-card id="command_panel" class="dashboard-card card-base">
+            <div class="card-heading">
+              <mdui-icon name="dashboard"></mdui-icon>
+              <span>常用入口</span>
+            </div>
+            <p class="nav-text">快速访问</p>
+            <div class="button-stack">
+              <mdui-button class="nav-action open-nav" variant="filled" href="https://yixing.ct.ws/" data-subtitle="即将打开逸兴计算机学社官网">前往逸兴计算机学社官网
+                <mdui-icon slot="icon" name="website"></mdui-icon>
+                <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+              </mdui-button>
+              
+              <mdui-button class="nav-action jjm-open-btn" variant="tonal">前往京剧猫同猫站官网
+                <mdui-icon slot="icon" name="website"></mdui-icon>
+                <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+              </mdui-button>
+              
+              <mdui-button class="nav-action open-nav" variant="tonal" href="https://smbrc.ct.ws/" data-subtitle="即将打开SMBRC官网">前往SMBRC官网
+                <mdui-icon slot="icon" name="videogame_asset"></mdui-icon>
+                <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+              </mdui-button>
+              
+              <mdui-button class="nav-action open-nav" variant="tonal" href="https://smtlod.ct.ws/" data-subtitle="即将打开《黑暗的传说》官网">前往《黑暗的传说》官网
+                <mdui-icon slot="icon" name="videogame_asset"></mdui-icon>
+                <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+              </mdui-button>
+            </div>
+          </mdui-card>
+          
+          <mdui-card class="dashboard-card card-base">
+            <div class="card-heading">
+              <mdui-icon name="code"></mdui-icon>
+              <span>项目</span>
+            </div>
+            <div class="project-list">
+              <div class="project-item">
+                <h3 class="project-title">
+                  <mdui-icon name="widgets"></mdui-icon>
+                  成绩分析系统
+                </h3>
+                <p class="project-desc">成绩分析系统是一款用于分析学生成绩表格的软件，有成绩统计与排名、可视化图表、学生搜索与分析等实用功能</p>
+                <mdui-button class="nav-action open-nav" variant="tonal" data-target-url="https://maker.ct.ws/blog/index.php/archives/1/" data-subtitle="正在前往博客">访问文章
+                  <mdui-icon slot="icon" name="book"></mdui-icon>
+                  <mdui-icon slot="end-icon" name="open_in_new"></mdui-icon>
+                </mdui-button>
+              </div>
+              
+              <div class="project-item">
+                <h3 class="project-title">
+                  <mdui-icon name="notes"></mdui-icon>
+                  阅卷系统
+                </h3>
+                <p class="project-desc">当前正在开发中...</p>
+                <mdui-button class="nav-action open-nav" variant="tonal">敬请期待</mdui-button>
+              </div>
+            </div>
+          </mdui-card>
+        </div>
+		
+		<div class="cards-grid">
+         <mdui-card class="dashboard-card card-base">
+            <div class="card-heading">
+              <mdui-icon name="build"></mdui-icon>
+              <span>工具</span>
+            </div>
+			<div class="button-stack">
+			  <mdui-button class="nav-action open-nav" variant="filled" href="https://axutongxue.onrender.com/index.html" data-subtitle="即将打开阿虚的储物间">前往阿虚的储物间
+			    <mdui-icon slot="icon" name="folder"></mdui-icon>
+			    <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+			  </mdui-button>
+			  
+			  <mdui-button class="nav-action open-nav" variant="tonal" href="https://lj.lbbai.com/" data-subtitle="即将打开老北鼻AI智能助手">前往老北鼻AI智能助手
+			    <mdui-icon slot="icon" name="smart_toy"></mdui-icon>
+			    <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+			  </mdui-button>
+			  
+			  <mdui-button class="nav-action open-nav" variant="tonal" href="https://tuostudy.com/" data-subtitle="即将打开图欧学习资源库">前往图欧学习资源库
+			    <mdui-icon slot="icon" name="book"></mdui-icon>
+			    <mdui-icon slot="end-icon" name="arrow_forward"></mdui-icon>
+			  </mdui-button>
+			</div>
+          </mdui-card>
+		</div>
+      </section>
+      
+      <section class="page-section">
+        <h1 class="page-title" style="display: flex; align-items: center; gap: 8px; font-size: 24px;">
+          <mdui-icon name="info" style="font-size: 36px;"></mdui-icon>
+          关于
+        </h1>
+        <div class="cards-grid">
+          <mdui-card class="person-card card-base">
+            <p style="font-size:27px">欢迎大家来到我的站点<br /></p>
+            <p class="project-desc">这里是白糖突然想到的主站</p>
+            <p class="project-desc">本站是一个主站，可以导航到我的其他站点</p>
+            <p class="project-desc">在快速访问里的站点都是由我制作或参与制作的网站</p>
+            <p class="project-desc">&copy; 白糖突然想到 2020-2025</p>
+            
+            <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap; justify-content: space-between;">
+              <mdui-card class="about-card" variant="elevated" style="flex: 1 1 45%; min-width: 250px;">
+                <div class="card-heading">
+                  <mdui-icon name="info"></mdui-icon>
+                  <span>关于我：</span>
+                </div>
+                <h4 style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">这里是白糖突然想到，本人是一名高中生，尝试为世界做出一点点贡献。</h4>
+              </mdui-card>
+              
+              <mdui-card class="about-card" variant="elevated" style="flex: 1 1 45%; min-width: 250px;">
+                <div class="card-heading">
+                  <mdui-icon name="code"></mdui-icon>
+                  <span>编程：</span>
+                </div>
+                <h4 style="font-size: 1.5rem; font-weight: bold; margin: 10px 0; display: flex; gap: 5px;">会一点点前端 <mdui-chip style="font-weight: bold;">HTML</mdui-chip> <mdui-chip style="font-weight: bold;">CSS</mdui-chip> <mdui-chip style="font-weight: bold;">JS</mdui-chip></h4>
+                <h4 style="font-size: 1.5rem; font-weight: bold; margin: 10px 0; display: flex; gap: 5px;">会一点点 <mdui-chip style="font-weight: bold;">Python</mdui-chip></h4>
+                <h4 style="font-size: 1.5rem; font-weight: bold; margin: 10px 0; display: flex; gap: 5px;">正在学习 <mdui-chip style="font-weight: bold;">Gdscript</mdui-chip> <mdui-chip style="font-weight: bold;">C++</mdui-chip></h4>
+              </mdui-card>
+              
+              <mdui-card class="about-card " variant="elevated" style="flex: 1 1 45%; min-width: 250px;">
+                <div class="card-heading">
+                  <mdui-icon name="edit"></mdui-icon>
+                  <span>当前在做的事：</span>
+                </div>
+                <h4 style="font-size: 1.5rem; font-weight: bold; margin: 5px 0;">用Godot做一款马里奥制造2的同人游戏</h4>
+                <h4 style="font-size: 1.5rem; font-weight: bold; margin: 5px 0;">学习，提高成绩</h4>
+              </mdui-card>
+            </div>
+            
+            <div style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap; justify-content: space-between;">
+              <mdui-card class="about-card" variant="elevated" style="flex: 1 1 45%; min-width: 250px;">
+                <div class="card-heading">
+                  <mdui-icon name="access_time"></mdui-icon>
+                  <span>运行时间:</span>
+                </div>
+                <div class="value" id="site-time" style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">
+                  0年 0天 0小时 0分 0秒
+                </div>
+              </mdui-card>
+              
+              <mdui-card class="about-card" variant="elevated" style="flex: 1 1 45%; min-width: 250px;">
+                <div class="card-heading">
+                  <mdui-icon name="visibility"></mdui-icon>
+                  <span>总访问量:</span>
+                </div>
+                <div class="value" style="font-size: 1.5rem; font-weight: bold; margin: 10px 0;">
+                  <span id="visitor-count">0</span>
+                </div>
+              </mdui-card>
+            </div>
+          </mdui-card>
+        </div>
+      </section>
+      
+      <mdui-dialog close-on-overlay-click class="nav-loading-dialog" headline="正在跳转">
+        <div class="dialog-loading">
+          <mdui-circular-progress size="32" style="align-items: center;"></mdui-circular-progress>
+        </div>
+        <mdui-button slot="action" variant="text" class="cancel-navigation" style="width: 100%;">取消</mdui-button>
+      </mdui-dialog>
+      
+      <mdui-dialog close-on-overlay-click class="jjm-dialog" headline="请选择要前往的的站点">
+        <div style="display:flex;flex-direction: column;gap:20px">
+          <mdui-button variant="filled" data-target-url="https://jingjumao.top/">主站</mdui-button>
+          <mdui-button variant="tonal" data-target-url="https://wiki.jjmforum.top/">论坛</mdui-button>
+          <mdui-button variant="tonal" data-target-url="https://jjmforum.top/">百科</mdui-button>
+        </div>
+        <mdui-button slot="action" variant="text" class="jjm-cancel-btn" style="width: 100%;" mdui-dialog-close>取消</mdui-button>
+      </mdui-dialog>
+    </main>
+    <mdui-fab extended class="play-music" id="play-music" icon="play_arrow">播放</mdui-fab>
+    <audio id="bgMusic" loop>
+      <source src="https://cdn.jsdelivr.net/gh/Dawn-Oxygen/home@main/EdchantedLove.mp3" type="audio/mpeg">
+    </audio>
+  </mdui-layout>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "白糖突然想到的主站",
+    "url": "index.html",
+    "inLanguage": "zh-CN",
+    "description": "typecho,php,blog,主站,这个人不姓苏,白糖突然想到,Dawn"
+  }
+  </script>
+
+</body>
+</html>
