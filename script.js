@@ -21,7 +21,8 @@ const materialColors = [
   "#546E7A"
 ];
 
-// 进入网站时显示欢迎信息
+let currentThemeColor = null;
+
 window.onload = function() {
   function getCurrentTime() {
     const now = new Date();
@@ -38,14 +39,27 @@ window.onload = function() {
     closeable: true
   });
   
-  // 加载保存的颜色或使用随机颜色
   const savedColor = localStorage.getItem("theme-color");
-  const randomColor = materialColors[Math.floor(Math.random() * materialColors.length)];
-  const initialColor = savedColor || randomColor;
-  mdui.setColorScheme(initialColor);
+  
+  if (savedColor) {
+    currentThemeColor = savedColor;
+    mdui.setColorScheme(savedColor);
+  } else {
+    const randomColor = materialColors[Math.floor(Math.random() * materialColors.length)];
+    currentThemeColor = randomColor;
+    mdui.setColorScheme(randomColor);
+    
+    setTimeout(() => {
+      mdui.snackbar({
+        message: `已应用随机主题色: ${randomColor}`,
+        placement: 'bottom',
+        closeable: true,
+        timeout: 3000
+      });
+    }, 1000);
+  }
 };
 
-// 主题切换功能
 document.addEventListener('DOMContentLoaded', () => {
   const themeToggleBtn = document.getElementById('theme-toggle');
   
@@ -59,9 +73,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateButtonIcon(newTheme);
     localStorage.setItem('theme', newTheme);
     
-    // 获取当前主题色
-    const currentThemeColor = localStorage.getItem('theme-color') || materialColors[0];
-    mdui.setColorScheme(currentThemeColor);
+    if (currentThemeColor) {
+      mdui.setColorScheme(currentThemeColor);
+    } else {
+      const savedColor = localStorage.getItem("theme-color") || materialColors[0];
+      currentThemeColor = savedColor;
+      mdui.setColorScheme(savedColor);
+    }
   }
   
   function updateButtonIcon(theme) {
@@ -70,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   function initializeTheme() {
-    // 首先检查是否有保存的亮/暗主题
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.body.classList.remove('mdui-theme-light', 'mdui-theme-dark');
@@ -78,16 +95,17 @@ document.addEventListener('DOMContentLoaded', () => {
       updateButtonIcon(savedTheme);
     }
     
-    // 获取当前主题色
-    const currentThemeColor = localStorage.getItem('theme-color') || materialColors[0];
-    mdui.setColorScheme(currentThemeColor);
+    const savedColor = localStorage.getItem("theme-color");
+    if (savedColor) {
+      currentThemeColor = savedColor;
+      mdui.setColorScheme(savedColor);
+    }
   }
   
   themeToggleBtn.addEventListener('click', toggleTheme);
   initializeTheme();
 });
 
-// 每日一言功能 
 let quoteText, quoteAuthor, quoteRefresh, quoteCopy;
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -110,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// 获取每日一言函数
 const fetchQuote = () => {
   if (!quoteText || !quoteAuthor) return;
   
@@ -171,7 +188,6 @@ const fetchQuote = () => {
     });
 };
 
-// 复制每日一言函数
 const copyQuote = () => {
   if (!quoteText || !quoteAuthor) return;
   
@@ -204,7 +220,6 @@ const copyQuote = () => {
   });
 };
 
-// 导航功能
 document.addEventListener('DOMContentLoaded', () => {
   const navDialog = document.querySelector(".nav-loading-dialog");
   const navButtons = document.querySelectorAll(".open-nav");
@@ -236,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // 取消导航功能
   if (navDialog && cancelNavButton) {
     cancelNavButton.addEventListener("click", () => {
       navDialog.open = false;
@@ -256,7 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // 京剧猫同猫站弹窗功能
   const jjmBtn = document.querySelector('.jjm-open-btn');
   const jjmDialog = document.querySelector('.jjm-dialog');
   
@@ -292,7 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // 音乐播放控制
   const musicBtn = document.getElementById('play-music');
   const bgMusic = document.getElementById('bgMusic');
   let isPlaying = false;
@@ -322,7 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 运行时间计时器
 function updateSiteTime() {
   const startDate = new Date(2025, 9, 28); 
   const currentDate = new Date();
@@ -345,7 +356,6 @@ function updateSiteTime() {
 setInterval(updateSiteTime, 1000);
 updateSiteTime();
 
-// 访客计数器
 document.addEventListener('DOMContentLoaded', function() {
   const countElement = document.getElementById('visitor-count');
   if (countElement) {
@@ -368,7 +378,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// 颜色选择器功能
 document.addEventListener('DOMContentLoaded', function() {
   const colorPickerDialog = document.querySelector(".color-picker-dialog");
   const btnThemeColor = document.getElementById("btn-theme-color");
@@ -402,6 +411,7 @@ document.addEventListener('DOMContentLoaded', function() {
       colorItem.addEventListener("click", () => {
         mdui.setColorScheme(color);
         localStorage.setItem("theme-color", color);
+        currentThemeColor = color;
         
         Array.from(colorGrid.children).forEach(c => {
            c.style.border = "2px solid transparent";
@@ -439,6 +449,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem("theme-color");
         const defaultColor = materialColors[0];
         mdui.setColorScheme(defaultColor);
+        currentThemeColor = defaultColor;
         
         if (colorGrid) {
             Array.from(colorGrid.children).forEach(c => {
@@ -452,15 +463,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         colorPickerDialog.open = false;
         
-        const snackbar = document.querySelector(".app-snackbar");
-        if(snackbar) {
-             snackbar.textContent = "已恢复默认主题色配置 (随机模式将在下次加载生效)";
-             snackbar.open = true;
-        }
+        mdui.snackbar({
+          message: "已恢复默认主题色配置 (随机模式将在下次加载生效)",
+          placement: 'bottom',
+          closeable: true,
+          timeout: 3000
+        });
       });
   }
 
-  const themeSelector = document.querySelector(".theme-selector");
+  const savedTheme = localStorage.getItem("theme");
   let currentTheme = "auto";
 
   const applyTheme = (theme) => {
@@ -474,32 +486,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  const updateThemeSelector = (theme) => {
-    if (themeSelector) {
-      themeSelector.value = theme;
-
-      const buttons = themeSelector.querySelectorAll("mdui-segmented-button");
-      buttons.forEach(btn => {
-        btn.selected = btn.value === theme;
-      });
-    }
-  };
-
-  let isInitialThemeLoad = true;
-
-  const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
     currentTheme = savedTheme;
     applyTheme(currentTheme);
-    requestAnimationFrame(() => {
-      updateThemeSelector(currentTheme);
-      setTimeout(() => isInitialThemeLoad = false, 300);
-    });
-  } else {
-    requestAnimationFrame(() => {
-      updateThemeSelector("auto");
-      setTimeout(() => isInitialThemeLoad = false, 300);
-    });
   }
 });
 
@@ -507,11 +496,9 @@ setTimeout(() => {
   mdui.update();
 }, 100);
 
-// 留言板
 let currentPage = 1;
 const messagesPerPage = 5;
 
-// 加载留言列表
 async function loadMessages(page = 1) {
   const container = document.getElementById('messages-container');
   const paginationControls = document.getElementById('pagination-controls');
@@ -580,7 +567,6 @@ async function loadMessages(page = 1) {
   }
 }
 
-// 创建留言元素
 function createMessageElement(message) {
   const div = document.createElement('div');
   div.className = 'message-item';
@@ -602,14 +588,12 @@ function createMessageElement(message) {
   return div;
 }
 
-// HTML转义
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
-// 提交留言表单
 function setupGuestbookForm() {
   const form = document.getElementById('guestbook-form');
   const textarea = form?.querySelector('textarea[name="message"]');
@@ -617,7 +601,6 @@ function setupGuestbookForm() {
   
   if (!form) return;
   
-  // 表单提交
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     
