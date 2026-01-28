@@ -70,7 +70,7 @@
       justify-items: center;
     }
 
-    /* 统一卡片样式 */
+    /* 默认卡片样式 */
     mdui-card.card-base {
       display: flex;
       flex-direction: column;
@@ -111,14 +111,14 @@
       min-height: 40px;
     }
 
-    .card-heading {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: rgb(var(--mdui-color-primary));
-      font-weight: var(--mdui-typescale-title-medium-weight);
-      letter-spacing: var(--mdui-typescale-title-medium-tracking);
-    }
+  .card-heading {
+    display: flex;
+    align-items: center;
+	gap: 8px;
+    color: rgb(var(--mdui-color-primary));
+    font-weight: var(--mdui-typescale-title-medium-weight);
+    letter-spacing: var(--mdui-typescale-title-medium-tracking);
+  }
 
     .card-heading span {
       color: rgb(var(--mdui-color-on-surface-variant));
@@ -271,7 +271,6 @@
       }
     }
 
-    /* 减少动画设置 */
     @media (prefers-reduced-motion: reduce) {
       mdui-card.card-base {
         transition: none;
@@ -281,3 +280,55 @@
         transform: none;
       }
     }
+  .quote-heading {
+	gap: 8px;
+    display: flex;
+    align-items: center;
+    color: rgb(var(--mdui-color-primary));
+    font-weight: var(--mdui-typescale-title-medium-weight);
+    letter-spacing: var(--mdui-typescale-title-medium-tracking);
+  }
+  .quote-card {
+    background-color: rgb(var(--mdui-color-surface-container));
+    color: rgb(var(--mdui-color-on-surface));
+    display: flex;
+    flex-direction: column;
+	padding-top:3%;
+	padding-bottom:3%;
+	padding-left:3%;
+	padding-right:3%;
+  }
+  
+  .quote-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+  }
+  
+  .quote-text {
+    font-size: var(--mdui-typescale-title-large-size);
+    line-height: var(--mdui-typescale-title-large-line-height);
+    font-weight: 400;
+    color: rgb(var(--mdui-color-on-surface));
+
+    padding-left: 16px;
+    border-left: 4px solid rgb(var(--mdui-color-primary));
+  }
+
+  .quote-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .quote-source {
+    margin: 0;
+    font-size: var(--mdui-typescale-body-medium-size);
+    color: rgb(var(--mdui-color-on-surface-variant));
+  }
+
+  .quote-actions {
+    display: flex;
+    gap: 0; 
+  }	
