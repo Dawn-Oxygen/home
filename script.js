@@ -506,3 +506,219 @@ document.addEventListener('DOMContentLoaded', function() {
 setTimeout(() => {
   mdui.update();
 }, 100);
+
+// 留言板
+let currentPage = 1;
+const messagesPerPage = 5;
+
+// 加载留言列表
+async function loadMessages(page = 1) {
+  const container = document.getElementById('messages-container');
+  const paginationControls = document.getElementById('pagination-controls');
+  
+  if (!container) return;
+  
+  try {
+    container.innerHTML = `
+      <div class="loading-messages" style="text-align: center; padding: 40px;">
+        <mdui-circular-progress></mdui-circular-progress>
+        <p style="margin-top: 16px; color: var(--mdui-color-on-surface-variant);">正在加载留言...</p>
+      </div>
+    `;
+    
+    const response = await fetch(`guestbook_api.php?action=messages&page=${page}&limit=${messagesPerPage}`);
+    const data = await response.json();
+    
+    if (data.success) {
+      const countElement = document.getElementById('message-count');
+      if (countElement) {
+        countElement.textContent = `共 ${data.pagination.total} 条留言`;
+      }
+
+      if (data.messages && data.messages.length > 0) {
+        container.innerHTML = '';
+        
+        data.messages.forEach(message => {
+          const messageElement = createMessageElement(message);
+          container.appendChild(messageElement);
+        });
+
+        if (data.pagination.total > messagesPerPage) {
+          paginationControls.style.display = 'flex';
+          const pageInfo = document.getElementById('page-info');
+          if (pageInfo) {
+            pageInfo.textContent = `第 ${page} / ${data.pagination.pages} 页`;
+          }
+        } else {
+          paginationControls.style.display = 'none';
+        }
+      } else {
+        container.innerHTML = `
+          <div class="empty-messages">
+            <mdui-icon name="forum"></mdui-icon>
+            <h3>暂无留言</h3>
+            <p>成为第一个留言的人吧！</p>
+          </div>
+        `;
+        paginationControls.style.display = 'none';
+      }
+      
+      currentPage = page;
+    } else {
+      throw new Error(data.error || '加载失败');
+    }
+  } catch (error) {
+    console.error('加载留言失败:', error);
+    container.innerHTML = `
+      <div class="empty-messages">
+        <mdui-icon name="error"></mdui-icon>
+        <h3>加载失败</h3>
+        <p>${error.message || '请刷新页面重试'}</p>
+      </div>
+    `;
+    paginationControls.style.display = 'none';
+  }
+}
+
+// 创建留言元素
+function createMessageElement(message) {
+  const div = document.createElement('div');
+  div.className = 'message-item';
+  
+  div.innerHTML = `
+    <div class="message-avatar">
+      <mdui-avatar src="${message.avatar}" style="width: 60px; height: 60px;" fit="cover"></mdui-avatar>
+    </div>
+    <div class="message-content">
+      <div class="message-header">
+        <div class="message-name">${escapeHtml(message.name)}</div>
+        <div class="message-time" title="${message.created_at}">${message.time_ago}</div>
+      </div>
+      <div class="message-text">${escapeHtml(message.message).replace(/\n/g, '<br>')}</div>
+      ${message.email ? `<div class="message-email">${escapeHtml(message.email)}</div>` : ''}
+    </div>
+  `;
+  
+  return div;
+}
+
+// HTML转义
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// 提交留言表单
+function setupGuestbookForm() {
+  const form = document.getElementById('guestbook-form');
+  const textarea = form?.querySelector('textarea[name="message"]');
+  const charCount = document.getElementById('char-count');
+  
+  if (!form) return;
+  
+  // 表单提交
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '提交中...';
+    submitBtn.disabled = true;
+    
+    try {
+      const formData = new FormData(this);
+      
+      const response = await fetch('guestbook_api.php?action=submit', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        const dialog = document.getElementById('success-dialog');
+        if (dialog) dialog.open = true;
+
+        form.reset();
+        if (charCount) charCount.textContent = '0/1000';
+
+        loadMessages(1);
+
+        if (data.data) {
+          const container = document.getElementById('messages-container');
+          if (container && container.querySelector('.message-item')) {
+            const messageElement = createMessageElement(data.data);
+            container.prepend(messageElement);
+          }
+        }
+      } else {
+        throw new Error(data.error || '提交失败');
+      }
+    } catch (error) {
+      console.error('提交留言失败:', error);
+      mdui.snackbar({
+        message: `提交失败: ${error.message}`,
+        placement: 'bottom',
+        closeable: true,
+        timeout: 4000
+      });
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  setupGuestbookForm();
+  loadMessages(1);
+
+  const refreshBtn = document.getElementById('refresh-messages');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', () => {
+      loadMessages(currentPage);
+      mdui.snackbar({
+        message: '正在刷新留言...',
+        placement: 'bottom',
+        timeout: 1000
+      });
+    });
+  }
+  
+  const prevBtn = document.getElementById('prev-page');
+  const nextBtn = document.getElementById('next-page');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (currentPage > 1) {
+        loadMessages(currentPage - 1);
+      }
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      loadMessages(currentPage + 1);
+    });
+  }
+  
+
+  async function updateMessageCount() {
+    try {
+      const response = await fetch('guestbook_api.php?action=count');
+      const data = await response.json();
+      
+      if (data.success) {
+        const countElement = document.getElementById('message-count');
+        if (countElement) {
+          countElement.textContent = `共 ${data.count} 条留言`;
+        }
+      }
+    } catch (error) {
+      console.error('更新留言计数失败:', error);
+    }
+  }
+
+  setInterval(updateMessageCount, 5 * 60 * 1000);
+});
