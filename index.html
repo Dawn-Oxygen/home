@@ -28,9 +28,13 @@
   <link rel="shortcut icon" href="https://maker.ct.ws/blog/usr/themes/Matecho/favicon.ico" type="image/x-icon">
   <link rel="icon" href="https://maker.ct.ws/blog/usr/uploads/2025/10/47267895.jpg" type="image/x-icon">
   <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
-  <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script> 
+  <!--
+  <link rel="stylesheet" href="https://gcore.jsdelivr.net/gh/Dawn-Oxygen/home@main/style.css">
+  <script src="https://gcore.jsdelivr.net/gh/Dawn-Oxygen/home@main/script.js"></script> 
+  -->
 </head>
 <body class="mdui-theme-auto">
   <mdui-layout class="app-shell">
@@ -261,6 +265,105 @@
             </div>
           </mdui-card>
         </div>
+		<section class="page-section">
+		  <h1 class="page-title" style="display: flex; align-items: center; gap: 8px; font-size: 24px;">
+		    <mdui-icon name="forum" style="font-size: 36px;"></mdui-icon>
+		    访客留言板
+		  </h1>
+		  
+		  <div class="cards-grid">
+		    <!-- 留言板主卡片 -->
+		    <mdui-card class="guestbook-card card-base">
+		      <div class="card-heading">
+		        <mdui-icon name="chat"></mdui-icon>
+		        <span>留下你的足迹</span>
+		      </div>
+		      
+		      <!-- 留言表单 -->
+		      <div class="guestbook-form">
+		        <form id="guestbook-form">
+		          <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+		            <mdui-text-field 
+		              class="form-field"
+		              label="你的昵称" 
+		              name="name" 
+		              required
+		              style="flex: 1 1 200px;">
+		              <mdui-icon slot="icon" name="person"></mdui-icon>
+		            </mdui-text-field>
+		            
+		            <mdui-text-field 
+		              class="form-field"
+		              label="邮箱 (可选)" 
+		              name="email" 
+		              type="email"
+		              style="flex: 1 1 200px;">
+		              <mdui-icon slot="icon" name="email"></mdui-icon>
+		            </mdui-text-field>
+		          </div>
+		          
+		          <mdui-text-field 
+		            label="留言内容" 
+		            name="message" 
+		            rows="3"
+		            maxlength="1000"
+		            required
+		            style="margin-bottom: 16px;"
+					maxlength="20" counter >
+					<mdui-icon slot="icon" name="chat"></mdui-icon>
+		          </mdui-text-field>
+		          
+		          <div style="display: flex; justify-content: space-between; align-items: center;">
+		            <div id="char-count" style="color: var(--mdui-color-on-surface-variant); font-size: 14px;">
+		            </div>
+		            
+		            <div>
+		              <mdui-button type="reset" variant="outlined" icon="delete">清空</mdui-button>
+		              <mdui-button type="submit" variant="filled" icon="send">提交留言</mdui-button>
+		            </div>
+		          </div>
+		        </form>
+		      </div>
+		      
+		      <div style="margin: 24px 0;">
+		        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+		          <h3 style="margin: 0; font-size: 1.2rem;">留言列表</h3>
+		          <div style="display: flex; align-items: center; gap: 8px;">
+		            <span id="message-count" style="color: var(--mdui-color-on-surface-variant);">加载中...</span>
+		            <mdui-button-icon id="refresh-messages" icon="refresh" variant="filled"></mdui-button-icon>
+		          </div>
+		        </div>
+		        
+		        <!-- 留言列表容器 -->
+		        <div id="messages-container" style="display: flex; flex-direction: column; gap: 16px; max-height: 500px; overflow-y: auto; padding: 8px;">
+		          <div class="loading-messages" style="text-align: center; padding: 40px;">
+		            <mdui-circular-progress></mdui-circular-progress>
+		            <p style="margin-top: 16px; color: var(--mdui-color-on-surface-variant);">正在加载留言...</p>
+		          </div>
+		        </div>
+		        
+		        <!-- 分页控件 -->
+		        <div id="pagination-controls" style="display: flex; justify-content: center; margin-top: 24px; display: none;">
+		          <mdui-button-icon id="prev-page" icon="chevron_left" variant="outlined"></mdui-button-icon>
+		          <span id="page-info" style="margin: 0 16px; display: flex; align-items: center;"></span>
+		          <mdui-button-icon id="next-page" icon="chevron_right" variant="outlined"></mdui-button-icon>
+		        </div>
+		      </div>
+		    </mdui-card>
+		  </div>
+		</section>
+		
+		<!-- 成功提交的提示对话框 -->
+		<mdui-dialog id="success-dialog" close-on-overlay-click headline="留言提交成功">
+		  <p>感谢你的留言！站长会在第一时间看到你的消息。</p>
+		  <mdui-button slot="action" variant="text" onclick="this.parentElement.open = false">确定</mdui-button>
+		</mdui-dialog>
+		
+		<!-- 管理面板入口（可选） -->
+		<mdui-button id="admin-btn" style="position: fixed; bottom: 100px; right: 24px; display: none;" variant="filled">
+		  <mdui-icon slot="icon" name="admin_panel_settings"></mdui-icon>
+		  管理留言
+		</mdui-button>
       </section>
       
       <mdui-dialog close-on-overlay-click class="nav-loading-dialog" headline="正在跳转">
@@ -292,7 +395,7 @@
     </main>
     <mdui-fab extended class="play-music" id="play-music" icon="play_arrow">播放</mdui-fab>
     <audio id="bgMusic" loop>
-      <source src="https://cdn.jsdelivr.net/gh/Dawn-Oxygen/home@main/EdchantedLove.mp3" type="audio/mpeg">
+      <source src="https://gcore.jsdelivr.net/gh/Dawn-Oxygen/home@main/EdchantedLove.mp3" type="audio/mpeg">
     </audio>
   </mdui-layout>
 
